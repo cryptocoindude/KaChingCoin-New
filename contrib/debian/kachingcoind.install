@@ -1,0 +1,2 @@
+debian/bin/KaChingCoind usr/bin
+src/KaChingCoind usr/lib/KaChingCoin
