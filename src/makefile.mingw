@@ -92,10 +92,10 @@ OBJS= \
     src/echo.o \
     src/simd.o
 
-all: badgercoind.exe
+all: KaChingCoind.exe
 
-test check: test_badgercoin.exe FORCE
-	test_badgercoin.exe
+test check: test_KaChingCoin.exe FORCE
+	test_KaChingCoin.exe
 
 obj/%.o: %.cpp $(HEADERS)
 	g++ -c $(CFLAGS) -o $@ $<
@@ -109,7 +109,7 @@ obj/scrypt-x86.o: scrypt-x86.S
 obj/scrypt-x86_64.o: scrypt-x86_64.S
 	$(CXX) -c $(xCXXFLAGS) -MMD -o $@ $<
 
-badgercoind.exe: $(OBJS:obj/%=obj/%)
+KaChingCoind.exe: $(OBJS:obj/%=obj/%)
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -117,11 +117,11 @@ TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
 obj-test/%.o: test/%.cpp $(HEADERS)
 	g++ -c $(TESTDEFS) $(CFLAGS) -o $@ $<
 
-test_badgercoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
+test_KaChingCoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	g++ $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework $(LIBS)
 
 clean:
-	-del /Q badgercoin test_badgercoin
+	-del /Q KaChingCoin test_KaChingCoin
 	-del /Q obj\*
 	-del /Q obj-test\*
 
