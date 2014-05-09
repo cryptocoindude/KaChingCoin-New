@@ -2559,7 +2559,7 @@ bool LoadBlockIndex(bool fAllowNew)
             return false;
 
         // Genesis block
-        const char* pszTimestamp = "Well, we could not find anything to put here :(. And instead of leaving it blank, we will tell you our plight :)";
+        const char* pszTimestamp = "todo: replace with something that ensures no premining took place";
         CTransaction txNew;
         txNew.nTime = nChainStartTime;
         txNew.vin.resize(1);
