@@ -948,27 +948,27 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
     {
         nSubsidy = 200;
     }
-    if (nHeight > 77000) //15 Million Coins, reward drops to 150 CPB (Coins Per Block)
+    else if (nHeight > 77000) //15 Million Coins, reward drops to 150 CPB (Coins Per Block)
     {
        nSubsidy = 150;
     }
-    if (nHeight > 102000)//20 Million Coins, reward drops to 100 CPB
+    else if (nHeight > 102000)//20 Million Coins, reward drops to 100 CPB
     {
        nSubsidy = 100;
     }
-    if (nHeight > 127000)//25 Million Coins, reward drops to 50 CPB
+    else if (nHeight > 127000)//25 Million Coins, reward drops to 50 CPB
     {
        nSubsidy = 50;
     }
-    if (nHeight > 202000)//40 Million Coins, reward drops to 25 CPB
+    else if (nHeight > 202000)//40 Million Coins, reward drops to 25 CPB
     {
         nSubsidy = 25;
     }
-    if (nHeight > 227000)//45 Million Coins, reward drops to 10 CPB, until 50 Million coins
+    else if (nHeight > 227000)//45 Million Coins, reward drops to 10 CPB, until 50 Million coins
     {
         nSubsidy = 10;
     }
-    else if
+    else
     {
         nSubsidy = 0;
     }
