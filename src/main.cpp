@@ -40,8 +40,8 @@ uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 
-static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
-static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
+static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 01);//Making testnet super low diff for testing purposes
+static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 01);//Making testnet super low diff for testing purposes
 
 unsigned int nStakeMinAge = 60 * 60 * 24 * 10;	// minimum age for coin age: 2d
 unsigned int nStakeMaxAge = 60* 60 * 24 * 30;	// stake age of full weight: -1
@@ -2534,12 +2534,12 @@ bool LoadBlockIndex(bool fAllowNew)
         pchMessageStart[3] = 0x4d;
 
         bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
-        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet
-        nStakeMinAge = 20 * 60; // test net min age is 20 min
-        nStakeMaxAge = 4 * 60 * 60; // test net min age is 60 min
+        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet.
+        nStakeMinAge = 60 * 05; // test net min age is 5 min.
+        nStakeMaxAge = 60 * 60; // test net min age is 60 min.
 
-        nCoinbaseMaturity = 1; // test maturity is 1 block
-        nStakeTargetSpacing = 1; // test block spacing is 1 minutes
+        nCoinbaseMaturity = 1; // testnet maturity is 1 block
+        nStakeTargetSpacing = 1; // testnet block spacing is 1 minute
     }
 
     //
@@ -2559,7 +2559,7 @@ bool LoadBlockIndex(bool fAllowNew)
             return false;
 
         // Genesis block
-        const char* pszTimestamp = "If you get knocked down, we get knocked up. Thats how life is. Enjoy";
+        const char* pszTimestamp = "Well, we could not find anything to put here :(. And instead of leaving it blank, we will tell you our plight :)";
         CTransaction txNew;
         txNew.nTime = nChainStartTime;
         txNew.vin.resize(1);
@@ -2599,7 +2599,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
 
 
-        assert(block.hashMerkleRoot == uint256("5f35291648efae16cd03663e6761e4cd12863ec5e87cfa3cfdc7bb3a57a829e5"));
+        assert(block.hashMerkleRoot == uint256("0x5a2e19825b4162f68602039040f1e05d9f924ff00a3aff7327ca6abd6f3279bc"));
 		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
 
         // Start new block file
