@@ -39,8 +39,7 @@ static const int64 MIN_RELAY_TX_FEE = .001 * COIN;
 static const int64 MAX_MONEY = 10000000 * COIN;
 static const int64 MAX_MONEY2 = 10000000 * COIN;			// 10 mil
 static const int64 CIRCULATION_MONEY = MAX_MONEY2;
-static const double TAX_PERCENTAGE = 0.02;
-static const int64 MAX_MINT_PROOF_OF_STAKE = 0.15 * COIN;	// 15% annual interest
+static const int64 MAX_MINT_PROOF_OF_STAKE = 0.2333 * COIN;	// 0.2333% annual interest
 
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 
@@ -54,10 +53,10 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-static const uint256 hashGenesisBlockOfficial("0x000009c5dce6111c71c76db55e1ff9993021a817768db288bc422d89cb5e445c");
-static const uint256 hashGenesisBlockTestNet ("0x000009c5dce6111c71c76db55e1ff9993021a817768db288bc422d89cb5e445c");
+static const uint256 hashGenesisBlockOfficial("0x499c271e5fafbe06c3b7262133eb1838e1ab3b529998a5ca00bc0167bb5a417e");
+static const uint256 hashGenesisBlockTestNet ("0xxa01d584d41cbc690a778f1b1cab394d2962993c06d997780687fba6d49e8464a");
 
-static const int64 nMaxClockDrift = 2 * 60 * 60;        // two hours
+static const int64 nMaxClockDrift = 60 * 5;        // 5 Minutes
 
 extern CScript COINBASE_FLAGS;
 
@@ -1133,7 +1132,7 @@ public:
     int64 nMoneySupply;
 
     unsigned int nFlags;  // ppcoin: block index flags
-    enum  
+    enum
     {
         BLOCK_PROOF_OF_STAKE = (1 << 0), // is proof-of-stake block
         BLOCK_STAKE_ENTROPY  = (1 << 1), // entropy bit for stake modifier
@@ -1331,7 +1330,7 @@ public:
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
-            nStakeModifier, nStakeModifierChecksum, 
+            nStakeModifier, nStakeModifierChecksum,
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),

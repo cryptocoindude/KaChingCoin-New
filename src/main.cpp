@@ -36,7 +36,7 @@ unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
-uint256 hashGenesisBlock("0x499c271e5fafbe06c3b7262133eb1838e1ab3b529998a5ca00bc0167bb5a417e");
+uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 
@@ -942,7 +942,36 @@ static const int CUTOFF_HEIGHT = POW_CUTOFF_HEIGHT;	// Height at the end of 2 we
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
-    int64 nSubsidy = 200 * COIN;
+    int64 nSubsidy = 0 * COIN;
+
+    if (nHeight > 1)
+    {
+        nSubsidy = 200;
+    }
+    if (nHeight > 77000) //15 Million Coins, reward drops to 150 CPB (Coins Per Block)
+    {
+       nSubsidy = 150;
+    }
+    if (nHeight > 102000)//20 Million Coins, reward drops to 100 CPB
+    {
+       nSubsidy = 100;
+    }
+    if (nHeight > 127000)//25 Million Coins, reward drops to 50 CPB
+    {
+       nSubsidy = 50;
+    }
+    if (nHeight > 202000)//40 Million Coins, reward drops to 25 CPB
+    {
+        nSubsidy = 25;
+    }
+    if (nHeight > 227000)//45 Million Coins, reward drops to 10 CPB, until 50 Million coins
+    {
+        nSubsidy = 10;
+    }
+    else if
+    {
+        nSubsidy = 0;
+    }
 
     return nSubsidy + nFees;
 }
@@ -2507,10 +2536,10 @@ bool LoadBlockIndex(bool fAllowNew)
         bnProofOfStakeLimit = bnProofOfStakeLimitTestNet; // 0x00000fff PoS base target is fixed in testnet
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 0x0000ffff PoW base target is fixed in testnet
         nStakeMinAge = 20 * 60; // test net min age is 20 min
-        nStakeMaxAge = 4* 60 * 60; // test net min age is 60 min
+        nStakeMaxAge = 4 * 60 * 60; // test net min age is 60 min
 
-        nCoinbaseMaturity = 10; // test maturity is 10 blocks
-        nStakeTargetSpacing = 30; // test block spacing is 3 minutes
+        nCoinbaseMaturity = 1; // test maturity is 1 block
+        nStakeTargetSpacing = 1; // test block spacing is 1 minutes
     }
 
     //
