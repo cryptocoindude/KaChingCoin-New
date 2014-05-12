@@ -1,5 +1,0 @@
-KaChingCoin-qt usr/bin
-share/pixmaps/bitcoin32.xpm usr/share/pixmaps
-share/pixmaps/bitcoin80.xpm usr/share/pixmaps
-debian/KaChingCoin-qt.desktop usr/share/applications
-debian/KaChingCoin-qt.protocol usr/share/kde4/services/
