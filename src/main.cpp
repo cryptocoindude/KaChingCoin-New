@@ -2574,7 +2574,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = 1398427917;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 3860056 ;
+        block.nNonce   = 4470016;
         if (true ) {
 
         // This will figure out a valid hash and Nonce if you're
@@ -2599,7 +2599,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
 
 
-        assert(block.hashMerkleRoot == uint256("0x"));
+        assert(block.hashMerkleRoot == uint256("0xd18ec4b6f3b4145ebb06e220f5347464a35a9bbb606d5d47775f9aaea1bcdc3b"));
 		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
 
         // Start new block file
