@@ -1,4 +1,6 @@
-KaChingCoin is forking to POS and X11. 
+Badgercoin (BDG)
 
-This is the public repository for the new source code of KaChingCoin. This code will eventually (a week hopefully) be moved to the regular KaChingCoin repository, replacing the old source.
+Badgercoin is an innovative, secure and energy efficient PoW/PoS coin. It uses a faster PoW distribution mechanism to distribute the initial coins, then after 14 days the coin is basically transferred to a pure PoS coin, where the generation of the coin is mainly through the PoS interests.
+
+
 

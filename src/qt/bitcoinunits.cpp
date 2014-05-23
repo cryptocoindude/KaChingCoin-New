@@ -34,9 +34,9 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("HIRO");
-    case mBTC: return QString("mHIRO");
-    case uBTC: return QString::fromUtf8("μHIRO");
+    case BTC: return QString("BDG");
+    case mBTC: return QString("mBDG");
+    case uBTC: return QString::fromUtf8("μBDG");
     default: return QString("???");
     }
 }
@@ -45,9 +45,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("Hirocoins");
-    case mBTC: return QString("Milli-Hirocoins (1 / 1,000)");
-    case uBTC: return QString("Micro-Hirocoins (1 / 1,000,000)");
+    case BTC: return QString("BDG");
+    case mBTC: return QString("Milli-BDG (1 / 1,000)");
+    case uBTC: return QString("Micro-BDG (1 / 1,000,000)");
     default: return QString("???");
     }
 }
@@ -56,10 +56,10 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case BTC:  return 100000000;
-    case mBTC: return 100000;
-    case uBTC: return 100;
-    default:   return 100000000;
+    case BTC:  return 1000000;
+    case mBTC: return 1000;
+    case uBTC: return 1;
+    default:   return 1000000;
     }
 }
 
@@ -78,9 +78,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case BTC: return 8;
-    case mBTC: return 5;
-    case uBTC: return 2;
+    case BTC: return 6;
+    case mBTC: return 3;
+    case uBTC: return 0;
     default: return 0;
     }
 }

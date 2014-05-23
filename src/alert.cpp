@@ -2,9 +2,6 @@
 // Alert system
 //
 
-#include <algorithm>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/replace.hpp>
 #include <boost/foreach.hpp>
 #include <map>
 
@@ -19,8 +16,13 @@ using namespace std;
 map<uint256, CAlert> mapAlerts;
 CCriticalSection cs_mapAlerts;
 
-static const char* pszMainKey = "047cf0b8c8bedb12f7acdd39b7399a079ab2f59adf6fff80b087601b213c34a3b4e2359e26de96c36296a8950b228c76e920846ac04081fb050b73b16936c58355";
-static const char* pszTestKey = "042d14223715f8df6b44389e9804bc6bb02ea9568e626645e4362c9acbf0d564d7f317c95467614a7a8b3f50d358413f32ea958a13c52b5150db5be12d4d432043";
+static const char* pszMainKey = "044fd9786990cc9e075ef7c9ee679aec481535245491208cf89a52a98a3c73754f160c07d8410437e0847ba570a511c30ffad3092ab24dc7cb997e7a6913d94339";
+
+// TestNet alerts pubKey
+static const char* pszTestKey = "04ecb36d13861c56f7ad14529bc54dc0b5d5d954586698c2fc244045c617e44ed07994808643f67a71e3c1003e8506fef238cfb98bf9468c1f7b9a684c5b536f55";
+
+// TestNet alerts private key
+// "3082011302010104202a23227c8e1ae38f23b8307cd12ed9ca4ef1951a09abb3ce06e2fda19ea60be4a081a53081a2020101302c06072a8648ce3d0101022100fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f300604010004010704410479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8022100fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141020101a14403420004ecb36d13861c56f7ad14529bc54dc0b5d5d954586698c2fc244045c617e44ed07994808643f67a71e3c1003e8506fef238cfb98bf9468c1f7b9a684c5b536f55"
 
 void CUnsignedAlert::SetNull()
 {
@@ -144,7 +146,9 @@ bool CAlert::RelayTo(CNode* pnode) const
 
 bool CAlert::CheckSignature() const
 {
-    CPubKey key(ParseHex(fTestNet ? pszTestKey : pszMainKey));
+    CKey key;
+    if (!key.SetPubKey(ParseHex(fTestNet ? pszTestKey : pszMainKey)))
+        return error("CAlert::CheckSignature() : SetPubKey failed");
     if (!key.Verify(Hash(vchMsg.begin(), vchMsg.end()), vchSig))
         return error("CAlert::CheckSignature() : verify signature failed");
 
@@ -166,7 +170,7 @@ CAlert CAlert::getAlertByHash(const uint256 &hash)
     return retval;
 }
 
-bool CAlert::ProcessAlert(bool fThread)
+bool CAlert::ProcessAlert()
 {
     if (!CheckSignature())
         return false;
@@ -230,27 +234,9 @@ bool CAlert::ProcessAlert(bool fThread)
 
         // Add to mapAlerts
         mapAlerts.insert(make_pair(GetHash(), *this));
-        // Notify UI and -alertnotify if it applies to me
+        // Notify UI if it applies to me
         if(AppliesToMe())
-        {
             uiInterface.NotifyAlertChanged(GetHash(), CT_NEW);
-            std::string strCmd = GetArg("-alertnotify", "");
-            if (!strCmd.empty())
-            {
-                // Alert text should be plain ascii coming from a trusted source, but to
-                // be safe we first strip anything not in safeChars, then add single quotes around
-                // the whole string before passing it to the shell:
-                std::string singleQuote("'");
-                std::string safeStatus = SanitizeString(strStatusBar);
-                safeStatus = singleQuote+safeStatus+singleQuote;
-                boost::replace_all(strCmd, "%s", safeStatus);
-
-                if (fThread)
-                    boost::thread t(runCommand, strCmd); // thread runs free
-                else
-                    runCommand(strCmd);
-            }
-        }
     }
 
     printf("accepted alert %d, AppliesToMe()=%d\n", nID, AppliesToMe());
